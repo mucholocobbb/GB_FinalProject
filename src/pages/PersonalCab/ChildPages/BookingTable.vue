@@ -1,17 +1,9 @@
 <template>
-    <!-- <div class="row mt-5">
-        <div class="offset-2 col-8">
-            <ul class="progressbar">
-                <li v-for="(status, key) in statuses"
-                    :class="{'active': key <= statusId }"
-                >
-                    {{ translations[status] }}
-                </li>
-            </ul>
+    <div class="table">
+        <div class="table_row">
+            <p>13:00</p>
+            <div class="table_"></div>
         </div>
-    </div> -->
-    <div class="test">
-        <img class="img" src="@/assets/BookingPlaceholder.png" alt="111">
     </div>
 </template>
 
@@ -21,11 +13,13 @@
     }
 </script>
 
-<style scoped>
-.test {
+<style lang="scss" scoped>
+.table {
     height: 100%;
+    &_row {
+        height: 64px;
+        background-color: #fff;
+    }
 }
-.img {
-    width: 100%;
-}
+
 </style>
