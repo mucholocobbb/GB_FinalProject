@@ -1,25 +1,158 @@
 <template>
-    <div class="table">
-        <div class="table_row">
-            <p>13:00</p>
-            <div class="table_"></div>
-        </div>
+  <div class="table">
+    <div
+      class="table_row"
+      :class="slotStatus(item.status)"
+      @click="setBook(item)"
+      v-for="(item, index) in slotList"
+      :key="index"
+    >
+      <p class="table_row_slottime">{{ item.time }}</p>
+      <div class="table_row_slotblock">
+        <p class="table_row_service">{{ item.service }}</p>
+        <p class="table_row_name">{{ item.name }}</p>
+        <p class="table_row_phone">{{ item.phone }}</p>
+        <p class="table_row_comment">{{ item.comment }}</p>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'BookingTable',
-    }
+export default {
+  name: "BookingTable",
+  data() {
+    return {
+      slotList: [
+        {
+          time: "10:00",
+          service: "Сеанс-тату. Средний размер",
+          name: "Антон Александров",
+          phone: "8-999-544-01-40",
+          comment: "Татуировка дракона - спина, взять обезбол",
+          status: "past",
+        },
+        {
+          time: "11:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "",
+        },
+        {
+          time: "12:00",
+          service: "Удаление тату. Малый размер",
+          name: "Елена Дмитриева",
+          phone: "8-999-544-01-40",
+          comment: "",
+          status: "pass",
+        },
+        {
+          time: "13:00",
+          service: "Сеанс-тату. Большой размер",
+          name: "Илья Иванов",
+          phone: "8-999-544-01-40",
+          comment: "Парковка фольксваген т143ов77",
+          status: "masterbook",
+        },
+        {
+          time: "14:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "",
+        },
+        {
+          time: "16:00",
+          service: "",
+          name: "Дмитрий",
+          phone: "8-999-544-01-40",
+          comment: "Хочет партаки",
+          status: "clientbook",
+        },
+      ],
+    };
+  },
+  computed: {},
+  methods: {
+    setBook(event) {
+      alert("Событие : " + event.time + " " + event.name);
+    },
+    slotStatus(item) {
+      switch (item) {
+        case "pass":
+          return "clientPass";
+        case "past":
+          return "clientPast";
+        case "masterbook":
+          return "clientMaster";
+        case "clientbook":
+          return "clientClient";
+        default:
+          break;
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 .table {
-    height: 100%;
-    &_row {
-        height: 64px;
-        background-color: #fff;
+  height: 100%;
+  &_row {
+    width: 100%;
+    height: 64px;
+    background-color: #fff;
+    display: flex;
+    margin: 2px 0;
+    transition: all 0.2s;
+    &:hover {
+      transform: translate(1px, 1px);
+      border: 1px solid rgba(152, 148, 148, 0.6);
+      box-shadow: -4px -4px 6px -5px rgba(152, 148, 148, 1);
     }
+    &:active {
+      transform: translate(0px, 0px);
+      border: 1px solid rgba(152, 148, 148, 0.6);
+    }
+    &_slottime {
+      margin: 4px;
+      font-size: 12px;
+      font-family: "Courier New", Courier, monospace;
+    }
+    &_slotblock {
+      margin: 4px 5%;
+    }
+    &_service {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    &_name {
+      font-size: 12px;
+    }
+    &_phone {
+      font-size: 12px;
+    }
+    &_comment {
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(152, 148, 148, 1);
+    }
+  }
+}
+.clientPass {
+    background-color: rgba(243, 109, 109, 0.5);
+}
+.clientPast {
+    background-color: rgba(153, 145, 145, 0.5);
+}
+.clientMaster {
+    background-color: rgba(171, 237, 170, 0.5);
+}
+.clientClient {
+    background-color: rgba(117, 174, 241, 0.5);
 }
 
 </style>
