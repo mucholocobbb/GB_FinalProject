@@ -1,5 +1,6 @@
 <template>
   <div class="table">
+    <ClientDetails v-if="isModalOpen" :actualItem="actualSlot" @closeModal="closeModal" />
     <div
       class="table_row"
       :class="slotStatus(item.status)"
@@ -19,10 +20,15 @@
 </template>
 
 <script>
+import ClientDetails from "@/components/CLientDetails.vue";
+
 export default {
   name: "BookingTable",
+  components: { ClientDetails },
   data() {
     return {
+      isModalOpen: false,
+      actualSlot: {},
       slotList: [
         {
           time: "10:00",
@@ -31,6 +37,7 @@ export default {
           phone: "8-999-544-01-40",
           comment: "Татуировка дракона - спина, взять обезбол",
           status: "past",
+          isFree: false,
         },
         {
           time: "11:00",
@@ -39,6 +46,7 @@ export default {
           phone: "",
           comment: "",
           status: "",
+          isFree: true,
         },
         {
           time: "12:00",
@@ -47,6 +55,7 @@ export default {
           phone: "8-999-544-01-40",
           comment: "",
           status: "pass",
+          isFree: false,
         },
         {
           time: "13:00",
@@ -55,6 +64,7 @@ export default {
           phone: "8-999-544-01-40",
           comment: "Парковка фольксваген т143ов77",
           status: "masterbook",
+          isFree: false,
         },
         {
           time: "14:00",
@@ -63,6 +73,16 @@ export default {
           phone: "",
           comment: "",
           status: "",
+          isFree: true,
+        },
+        {
+          time: "15:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "",
+          isFree: true,
         },
         {
           time: "16:00",
@@ -71,14 +91,25 @@ export default {
           phone: "8-999-544-01-40",
           comment: "Хочет партаки",
           status: "clientbook",
+          isFree: false,
+        },
+        {
+          time: "17:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "",
+          isFree: true,
         },
       ],
     };
   },
   computed: {},
   methods: {
-    setBook(event) {
-      alert("Событие : " + event.time + " " + event.name);
+    setBook(item) {
+      this.actualSlot = item
+      this.isModalOpen = true
     },
     slotStatus(item) {
       switch (item) {
@@ -94,6 +125,10 @@ export default {
           break;
       }
     },
+    closeModal() {
+        this.actualSlot = {}
+        this.isModalOpen = false
+    }
   },
 };
 </script>
@@ -101,6 +136,7 @@ export default {
 <style lang="scss" scoped>
 .table {
   height: 100%;
+  position: relative;
   &_row {
     width: 100%;
     height: 64px;
@@ -143,16 +179,15 @@ export default {
   }
 }
 .clientPass {
-    background-color: rgba(243, 109, 109, 0.5);
+  background-color: rgba(243, 109, 109, 0.5);
 }
 .clientPast {
-    background-color: rgba(153, 145, 145, 0.5);
+  background-color: rgba(153, 145, 145, 0.5);
 }
 .clientMaster {
-    background-color: rgba(171, 237, 170, 0.5);
+  background-color: rgba(171, 237, 170, 0.5);
 }
 .clientClient {
-    background-color: rgba(117, 174, 241, 0.5);
+  background-color: rgba(117, 174, 241, 0.5);
 }
-
 </style>
