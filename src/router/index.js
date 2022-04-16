@@ -2,8 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import WelcomePage from "@/pages/WelcomePage.vue";
 import PersonalCab from "@/pages/PersonalCab/PersonalCabinet.vue";
-import Contacts from "@/pages/PersonalCab/Contacts.vue";
-import Page404 from "@/pages/NotFound.vue";
+import Page404 from "@/pages/PersonalCab/ChildPages/Contacts.vue";
 // import BookingTable from "@/pages/PersonalCab/ChildPages/BookingTable.vue"
 import App from "@/App.vue"
 
@@ -36,12 +35,12 @@ const routes = [
                 name: "Preferences",
                 component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/Preferences.vue')
             },
+            {
+                path: "/personalpage/contacts",
+                name: "Contacts",
+                component: () => import( /*webpackChunkName: "Contacts" */ '@/pages/PersonalCab/ChildPages/Contacts.vue')
+            },
         ]
-    },
-    {
-        path: "/personalpage/contacts",
-        name: "Contacts",
-        component: Contacts,
     },
     {
         path: "/404",
