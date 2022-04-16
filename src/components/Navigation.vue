@@ -19,6 +19,9 @@
             <li>
                 <a href="#">Обратная связь</a>
             </li>
+            <li>
+                <router-link to="/personalpage/contacts">Контакты</router-link>
+            </li>
         </ul>
     </div>
 </template>
