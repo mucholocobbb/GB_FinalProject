@@ -49,7 +49,7 @@ export default {
                     email: 'someemail@mail.ru',
                 },
                 {
-                    title: 'Бекенд-разработчик',
+                    title: 'Бэкенд-разработчик',
                     phone: '8-999-999-11-99',
                     image: require('@/assets/contacts/3.jpg'),
                     email: 'someemail@mail.ru',
