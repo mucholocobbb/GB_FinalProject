@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import WelcomePage from "@/pages/WelcomePage.vue";
 import PersonalCab from "@/pages/PersonalCab/PersonalCabinet.vue";
-import Page404 from "@/pages/PersonalCab/ChildPages/Contacts.vue";
+import Page404 from "@/pages/NotFound.vue";
 // import BookingTable from "@/pages/PersonalCab/ChildPages/BookingTable.vue"
 import App from "@/App.vue"
 
