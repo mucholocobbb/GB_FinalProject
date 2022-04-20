@@ -31,7 +31,6 @@ export default {
         position: fixeabd;
         top: 0;
         left: 0;
-        height: 100vh;
         padding: 20px;
     }
 </style>
