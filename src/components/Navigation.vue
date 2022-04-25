@@ -2,13 +2,13 @@
     <div class="navigation">
         <ul>
             <li>
-                <router-link to="/personalpage/bookingtable">Расписание</router-link>
+                <a><router-link to="/personalpage/bookingtable">Расписание</router-link></a>
             </li>
             <li>
                 <router-link to="/personalpage/preferences">Настройки</router-link>
             </li>
             <li>
-                <a href="#">Услуги</a>
+                <router-link to="/personalpage/services">Услуги</router-link>
             </li>
             <li>
                 <router-link to="/personalpage/clients">Клиенты</router-link>
@@ -37,13 +37,23 @@ export default {
     font-size: 16px;
     line-height: 21px;
     color: #897e7e;
+    
 
-    ul {
-        padding-left: 20px;
+    li {
+        margin-left: 20px;
+        list-style-type: disc;
+        color: #897e7e;
+        &:hover {
+            color: black;
+        }
 
         a {
             text-decoration: none;
             color: #897e7e;
+
+            &:hover {
+                color: black;
+            }
         }
     }
 }

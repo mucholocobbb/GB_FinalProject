@@ -36,6 +36,11 @@ const routes = [
                 component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/SettingsPage.vue')
             },
             {
+                path: "/personalpage/services",
+                name: "ServicePage",
+                component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/ServicePage.vue')
+            },
+            {
                 path: "/personalpage/clients",
                 name: "ClientsList",
                 component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/ClientsList.vue')
