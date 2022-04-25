@@ -69,4 +69,8 @@ body,
     background: #c0c0c0;
     box-shadow: 0 0 50px -20px black;
 }
+
+button {
+    cursor: pointer;
+}
 </style>

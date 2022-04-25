@@ -22,6 +22,13 @@ export default {
             border-radius: 10px;
             box-sizing: border-box;
             padding: 12px 16px;
+            
+            position: absolute;
+            bottom: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
         }
     }
 </style>

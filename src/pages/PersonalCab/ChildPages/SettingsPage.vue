@@ -121,38 +121,6 @@
 
 <style lang="scss" scoped>
     .page_container {
-        .user_container {
-            display: flex;
-            justify-content: center;
-            background: rgba(226, 216, 216, 0.69);
-            margin-bottom: 8px;
-            cursor: pointer;
-
-            .user {
-                padding: 16px;
-                font-weight: 600;
-
-                .specialist {
-                    color: rgb(143, 140, 140);
-                    line-height: 12px;
-                    font-size: 10px;
-                }
-            }
-        }
-
-        .scheduler_container {
-            display: flex;
-            justify-content: center;
-            background: rgb(224, 224, 224);
-            margin-bottom: 8px;
-            cursor: pointer;
-
-            .scheduler {
-                padding: 20px;
-                font-weight: 600;
-            }
-        }
-
         .settings {
             display: flex;
             flex-direction: column;
@@ -172,7 +140,6 @@
 
             form {
                 padding: 1em;
-                // border-radius: 1em;
                 padding-left: 0px;
                 margin-left: 20px;
                 box-sizing: border-box;
