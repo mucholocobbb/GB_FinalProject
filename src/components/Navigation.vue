@@ -54,6 +54,10 @@ export default {
             &:hover {
                 color: black;
             }
+
+            &.router-link-active {
+                color: black;
+            }
         }
     }
 }

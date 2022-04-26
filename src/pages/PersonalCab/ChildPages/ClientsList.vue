@@ -99,7 +99,7 @@ export default {
             margin-bottom: 4px;
 
             .client-cell {
-                width: 300px;
+                width: 33%;
                 text-align: left;
                 padding: 10px 10px 10px;
             }
@@ -119,7 +119,7 @@ export default {
                 display: flex;
 
                 .info {
-                    width: 300px;
+                    width: 33%;
                     text-align: left;
                     padding: 10px 10px 10px;
                 }
