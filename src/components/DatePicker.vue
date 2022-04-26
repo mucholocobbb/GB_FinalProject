@@ -1,7 +1,7 @@
 <template>
     <div class="datepicker">
         <form>
-            <input type="date">
+            <input type="date" class="picker">
         </form>
     </div>
 </template>
@@ -13,7 +13,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .datepicker{
+    .datepicker {
         padding: 32px 0 44px 0;
+
+        .picker {
+            width: 100%;
+        }   
     }
 </style>

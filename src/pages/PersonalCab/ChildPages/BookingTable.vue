@@ -135,7 +135,6 @@ export default {
 
 <style lang="scss" scoped>
 .table {
-  height: 100%;
   position: relative;
   &_row {
     width: 100%;

@@ -12,6 +12,8 @@ export default {
 
 <style lang="scss" scoped>
     .authorization{
+        display: flex;
+        justify-content: center;
 
         .sign_out{
             font-size: 14px;
