@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Отчёт о финансах</h1>
-    <canvas ref="planetChart"></canvas>
+    <canvas ref="financeChart"></canvas>
   </div>
 </template>
 
@@ -57,7 +57,7 @@ const dataMock = [
 ]
 
 export default {
-    name: 'PlanetChart',
+    name: 'financeChart',
     data() {
         return {
             financeParams,
@@ -71,7 +71,7 @@ export default {
             this.financeParams.data.datasets[index].data = dataMock[index].data;
           })
           
-          new Chart(this.$refs.planetChart, this.financeParams);
+          new Chart(this.$refs.financeChart, this.financeParams);
         },
     },
     mounted() {
