@@ -14,7 +14,7 @@
                 <router-link to="/personalpage/clients">Клиенты</router-link>
             </li>
             <li>
-                <a href="#">Финансы</a>
+                <router-link to="/personalpage/finance">Финансы</router-link>
             </li>
             <li>
                 <a href="#">Обратная связь</a>
