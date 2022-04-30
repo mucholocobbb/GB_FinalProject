@@ -50,6 +50,11 @@ const routes = [
                 name: "Contacts",
                 component: () => import( /*webpackChunkName: "Contacts" */ '@/pages/PersonalCab/ChildPages/Contacts.vue')
             },
+            {
+                path: "/personalpage/finance",
+                name: "Finance",
+                component: () => import( /*webpackChunkName: "Finance" */ '@/pages/PersonalCab/ChildPages/Finance.vue')
+            },
         ]
     },
     {
