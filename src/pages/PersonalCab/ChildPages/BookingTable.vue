@@ -1,10 +1,10 @@
 <template>
   <div class="table">
-    <ClientDetails v-if="isModalOpen" :actualItem="actualSlot" @closeModal="closeModal" />
+    <ClientDetails v-if="isModalOpen" :actualItem="actualSlot" :actualIndex="actualIndex" @closeModal="closeModal" />
     <div
       class="table_row"
       :class="slotStatus(item.status)"
-      @click="setBook(item)"
+      @click="setBook(item,index)"
       v-for="(item, index) in slotList"
       :key="index"
     >
@@ -29,6 +29,7 @@ export default {
     return {
       isModalOpen: false,
       actualSlot: {},
+      actualIndex: 0,
       slotList: [
         {
           time: "10:00",
@@ -107,9 +108,10 @@ export default {
   },
   computed: {},
   methods: {
-    setBook(item) {
+    setBook(item,index) {
       this.actualSlot = item
       this.isModalOpen = true
+      this.actualIndex = index
     },
     slotStatus(item) {
       switch (item) {
@@ -144,13 +146,11 @@ export default {
     margin: 2px 0;
     transition: all 0.2s;
     &:hover {
-      transform: translate(1px, 1px);
-      border: 1px solid rgba(152, 148, 148, 0.6);
+      border: 1px solid rgba(103, 103, 103, 0.6);
       box-shadow: -4px -4px 6px -5px rgba(152, 148, 148, 1);
     }
     &:active {
-      transform: translate(0px, 0px);
-      border: 1px solid rgba(152, 148, 148, 0.6);
+      border: 1px solid rgba(90, 87, 87, 0.6);
     }
     &_slottime {
       margin: 4px;
