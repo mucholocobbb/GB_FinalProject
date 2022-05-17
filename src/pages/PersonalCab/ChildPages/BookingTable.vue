@@ -1,31 +1,208 @@
 <template>
-    <!-- <div class="row mt-5">
-        <div class="offset-2 col-8">
-            <ul class="progressbar">
-                <li v-for="(status, key) in statuses"
-                    :class="{'active': key <= statusId }"
-                >
-                    {{ translations[status] }}
-                </li>
-            </ul>
-        </div>
-    </div> -->
-    <div class="test">
-        <img class="img" src="@/assets/BookingPlaceholder.png" alt="111">
+  <div class="table">
+    <ClientDetails
+      v-if="isModalOpen"
+      :actualItem="actualSlot"
+      :actualIndex="actualIndex"
+      @closeModal="closeModal"
+      @setItem="setItem"
+    />
+    <div
+      class="table_row"
+      :class="slotStatus(item.status)"
+      @click="setBook(item, index)"
+      v-for="(item, index) in slotList"
+      :key="index"
+    >
+      <p class="table_row_slottime">{{ item.time }}</p>
+      <div class="table_row_slotblock">
+        <p class="table_row_service">{{ item.service }}</p>
+        <p class="table_row_name">{{ item.name }}</p>
+        <p class="table_row_phone">{{ item.phone }}</p>
+        <p class="table_row_comment">{{ item.comment }}</p>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: 'BookingTable',
-    }
+import ClientDetails from "@/components/CLientDetails.vue";
+
+export default {
+  name: "BookingTable",
+  components: { ClientDetails },
+  data() {
+    return {
+      isModalOpen: false,
+      actualSlot: {},
+      actualIndex: 0,
+      slotList: [
+        {
+          time: "10:00",
+          service: "Сеанс-тату. Средний размер",
+          name: "Антон Александров",
+          phone: "8-999-544-01-40",
+          comment: "Татуировка дракона - спина, взять обезбол",
+          status: "past",
+          isFree: false,
+        },
+        {
+          time: "11:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "freeslot",
+          isFree: true,
+        },
+        {
+          time: "12:00",
+          service: "Удаление тату. Малый размер",
+          name: "Елена Дмитриева",
+          phone: "8-999-544-01-40",
+          comment: "",
+          status: "pass",
+          isFree: false,
+        },
+        {
+          time: "13:00",
+          service: "Сеанс-тату. Большой размер",
+          name: "Илья Иванов",
+          phone: "8-999-544-01-40",
+          comment: "Парковка фольксваген т143ов77",
+          status: "masterbook",
+          isFree: false,
+        },
+        {
+          time: "14:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "freeslot",
+          isFree: true,
+        },
+        {
+          time: "15:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "freeslot",
+          isFree: true,
+        },
+        {
+          time: "16:00",
+          service: "",
+          name: "Дмитрий",
+          phone: "8-999-544-01-40",
+          comment: "Хочет партаки",
+          status: "clientbook",
+          isFree: false,
+        },
+        {
+          time: "17:00",
+          service: "",
+          name: "",
+          phone: "",
+          comment: "",
+          status: "freeslot",
+          isFree: true,
+        },
+      ],
+    };
+  },
+  computed: {},
+  methods: {
+    setBook(item, index) {
+      this.actualSlot = item;
+      this.isModalOpen = true;
+      this.actualIndex = index;
+    },
+    slotStatus(item) {
+      switch (item) {
+        case "freeslot":
+          return "freeSlot";
+        case "pass":
+          return "clientPass";
+        case "past":
+          return "clientPast";
+        case "masterbook":
+          return "clientMaster";
+        case "clientbook":
+          return "clientClient";
+        default:
+          break;
+      }
+    },
+    closeModal() {
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
+    setItem(newItem) {
+      this.slotList[newItem.index] = newItem.item;
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
+  },
+};
 </script>
 
-<style scoped>
-.test {
-    height: 100%;
-}
-.img {
+<style lang="scss" scoped>
+.table {
+  position: relative;
+  &_row {
     width: 100%;
+    height: 60px;
+    background-color: #fff;
+    display: flex;
+    margin: 2px 0;
+    transition: all 0.2s;
+    &:hover {
+      border: 1px solid rgba(103, 103, 103, 0.6);
+      box-shadow: -4px -4px 6px -5px rgba(152, 148, 148, 1);
+    }
+    &:active {
+      border: 1px solid rgba(90, 87, 87, 0.6);
+    }
+    &_slottime {
+      margin: 4px;
+      font-size: 12px;
+      font-family: "Courier New", Courier, monospace;
+    }
+    &_slotblock {
+      margin: 4px 5%;
+    }
+    &_service {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    &_name {
+      font-size: 12px;
+    }
+    &_phone {
+      font-size: 12px;
+    }
+    &_comment {
+      font-size: 11px;
+      font-style: italic;
+      color: rgba(152, 148, 148, 1);
+    }
+  }
+}
+.freeSlot {
+  background-color: rgba(255, 255, 255, 0.982);
+}
+.clientPass {
+  background-color: rgba(243, 109, 109, 0.5);
+}
+.clientPast {
+  background-color: rgba(153, 145, 145, 0.5);
+}
+.clientMaster {
+  background-color: rgba(171, 237, 170, 0.5);
+}
+.clientClient {
+  background-color: rgba(117, 174, 241, 0.5);
 }
 </style>

@@ -32,13 +32,28 @@ const routes = [
             },
             {
                 path: "/personalpage/preferences",
-                name: "Preferences",
-                component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/Preferences.vue')
+                name: "SettingsPage",
+                component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/SettingsPage.vue')
+            },
+            {
+                path: "/personalpage/services",
+                name: "ServicePage",
+                component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/ServicePage.vue')
+            },
+            {
+                path: "/personalpage/clients",
+                name: "ClientsList",
+                component: () => import( /*webpackChunkName: "Preferences" */ '@/pages/PersonalCab/ChildPages/ClientsList.vue')
             },
             {
                 path: "/personalpage/contacts",
                 name: "Contacts",
                 component: () => import( /*webpackChunkName: "Contacts" */ '@/pages/PersonalCab/ChildPages/Contacts.vue')
+            },
+            {
+                path: "/personalpage/finance",
+                name: "Finance",
+                component: () => import( /*webpackChunkName: "Finance" */ '@/pages/PersonalCab/ChildPages/Finance.vue')
             },
         ]
     },

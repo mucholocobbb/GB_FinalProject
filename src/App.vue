@@ -9,7 +9,7 @@
 export default {
     data() {
         return {
-            isAuth: false,
+            isAuth: true,
         };
     },
     methods: {
@@ -65,8 +65,12 @@ body,
 }
 .wrapper {
     margin: 0 calc(50vw - 512px);
-    min-height: 100%;
+    height: 100%;
     background: #c0c0c0;
     box-shadow: 0 0 50px -20px black;
+}
+
+button {
+    cursor: pointer;
 }
 </style>
