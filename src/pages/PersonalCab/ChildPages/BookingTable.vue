@@ -1,10 +1,16 @@
 <template>
   <div class="table">
-    <ClientDetails v-if="isModalOpen" :actualItem="actualSlot" @closeModal="closeModal" />
+    <ClientDetails
+      v-if="isModalOpen"
+      :actualItem="actualSlot"
+      :actualIndex="actualIndex"
+      @closeModal="closeModal"
+      @setItem="setItem"
+    />
     <div
       class="table_row"
       :class="slotStatus(item.status)"
-      @click="setBook(item)"
+      @click="setBook(item, index)"
       v-for="(item, index) in slotList"
       :key="index"
     >
@@ -29,6 +35,7 @@ export default {
     return {
       isModalOpen: false,
       actualSlot: {},
+      actualIndex: 0,
       slotList: [
         {
           time: "10:00",
@@ -45,7 +52,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -72,7 +79,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -81,7 +88,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -99,7 +106,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
       ],
@@ -107,12 +114,15 @@ export default {
   },
   computed: {},
   methods: {
-    setBook(item) {
-      this.actualSlot = item
-      this.isModalOpen = true
+    setBook(item, index) {
+      this.actualSlot = item;
+      this.isModalOpen = true;
+      this.actualIndex = index;
     },
     slotStatus(item) {
       switch (item) {
+        case "freeslot":
+          return "freeSlot";
         case "pass":
           return "clientPass";
         case "past":
@@ -126,9 +136,14 @@ export default {
       }
     },
     closeModal() {
-        this.actualSlot = {}
-        this.isModalOpen = false
-    }
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
+    setItem(newItem) {
+      this.slotList[newItem.index] = newItem.item;
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
   },
 };
 </script>
@@ -138,19 +153,17 @@ export default {
   position: relative;
   &_row {
     width: 100%;
-    height: 64px;
+    height: 60px;
     background-color: #fff;
     display: flex;
     margin: 2px 0;
     transition: all 0.2s;
     &:hover {
-      transform: translate(1px, 1px);
-      border: 1px solid rgba(152, 148, 148, 0.6);
+      border: 1px solid rgba(103, 103, 103, 0.6);
       box-shadow: -4px -4px 6px -5px rgba(152, 148, 148, 1);
     }
     &:active {
-      transform: translate(0px, 0px);
-      border: 1px solid rgba(152, 148, 148, 0.6);
+      border: 1px solid rgba(90, 87, 87, 0.6);
     }
     &_slottime {
       margin: 4px;
@@ -176,6 +189,9 @@ export default {
       color: rgba(152, 148, 148, 1);
     }
   }
+}
+.freeSlot {
+  background-color: rgba(255, 255, 255, 0.982);
 }
 .clientPass {
   background-color: rgba(243, 109, 109, 0.5);
