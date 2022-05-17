@@ -9,7 +9,7 @@
             <label class="form_label" for="name">ФИО</label>
           </div>
           <div class="form_serviceselect form_itemblock">
-            <select class="form_input" id="service" v-model="serviceSelect">
+            <select class="form_input" id="service" v-model="service">
               <option v-for="(option, index) of serviceArr" :key="index">
                 {{ option.title }}
               </option>
@@ -96,6 +96,10 @@ export default {
       serviceSelect: "",
       serviceArr: [
         {
+          title: "",
+          timeLimit: 60,
+        },
+        {
           title: "Удаление тату. Малый размер",
           timeLimit: 30,
         },
@@ -123,18 +127,47 @@ export default {
     closeModal() {
       this.$emit("closeModal");
     },
-    setItem(event){
-        console.log(event);
-        let newItem = {
-            time: this.time,
-            service: this.service,
-            name: this.name,
-            phone: this.phone,
-            comment: this.comment,
-            status: this.status,
-            isFree: this.isFree
-        }
-    }
+    setItem() {
+      let newItem = {
+        index: this.actualIndex,
+        date: this.date,
+        item: {
+          time: this.time,
+          service: this.service,
+          name: this.name,
+          phone: this.phone,
+          comment: this.comment,
+          status: this.setStatus() || this.setSec() ,
+          isFree: this.setIsFree(),
+        },
+      };
+      this.$emit("setItem", newItem);
+    },
+    setIsFree() {
+      if (
+        this.service === "" &&
+        this.name === "" &&
+        this.phone === ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    setStatus() {
+      if (this.setIsFree()) {
+        return "freeslot";
+      } else {
+        return ""
+      }
+    },
+    setSec() {
+      if (this.status === "freeslot") {
+        return "masterbook";
+      } else {
+        return this.status
+      }
+    },
   },
   mounted() {
     this.time = this.actualItem.time;
@@ -145,7 +178,7 @@ export default {
     this.status = this.actualItem.status;
     this.isFree = this.actualItem.isFree;
     if (this.service != "") {
-      ({ title: this.serviceSelect, timeLimit: this.serviceTime } =
+      ({ title: this.service, timeLimit: this.serviceTime } =
         this.serviceArr.filter((item) => {
           return item.title == this.service;
         })[0]);

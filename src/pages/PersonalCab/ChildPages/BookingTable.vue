@@ -1,10 +1,16 @@
 <template>
   <div class="table">
-    <ClientDetails v-if="isModalOpen" :actualItem="actualSlot" :actualIndex="actualIndex" @closeModal="closeModal" />
+    <ClientDetails
+      v-if="isModalOpen"
+      :actualItem="actualSlot"
+      :actualIndex="actualIndex"
+      @closeModal="closeModal"
+      @setItem="setItem"
+    />
     <div
       class="table_row"
       :class="slotStatus(item.status)"
-      @click="setBook(item,index)"
+      @click="setBook(item, index)"
       v-for="(item, index) in slotList"
       :key="index"
     >
@@ -46,7 +52,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -73,7 +79,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -82,7 +88,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
         {
@@ -100,7 +106,7 @@ export default {
           name: "",
           phone: "",
           comment: "",
-          status: "",
+          status: "freeslot",
           isFree: true,
         },
       ],
@@ -108,13 +114,15 @@ export default {
   },
   computed: {},
   methods: {
-    setBook(item,index) {
-      this.actualSlot = item
-      this.isModalOpen = true
-      this.actualIndex = index
+    setBook(item, index) {
+      this.actualSlot = item;
+      this.isModalOpen = true;
+      this.actualIndex = index;
     },
     slotStatus(item) {
       switch (item) {
+        case "freeslot":
+          return "freeSlot";
         case "pass":
           return "clientPass";
         case "past":
@@ -128,9 +136,14 @@ export default {
       }
     },
     closeModal() {
-        this.actualSlot = {}
-        this.isModalOpen = false
-    }
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
+    setItem(newItem) {
+      this.slotList[newItem.index] = newItem.item;
+      this.actualSlot = {};
+      this.isModalOpen = false;
+    },
   },
 };
 </script>
@@ -140,7 +153,7 @@ export default {
   position: relative;
   &_row {
     width: 100%;
-    height: 64px;
+    height: 60px;
     background-color: #fff;
     display: flex;
     margin: 2px 0;
@@ -176,6 +189,9 @@ export default {
       color: rgba(152, 148, 148, 1);
     }
   }
+}
+.freeSlot {
+  background-color: rgba(255, 255, 255, 0.982);
 }
 .clientPass {
   background-color: rgba(243, 109, 109, 0.5);
