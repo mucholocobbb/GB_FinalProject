@@ -12,7 +12,7 @@
       <p class="table_row_slottime">{{ item.time }}</p>
       <div class="table_row_slotblock">
         <p class="table_row_service">{{ item.service }}</p>
-        <p class="table_row_name">{{ item.name }}</p>
+        <p class="table_row_name">{{ item.name }} {{ item.lastname }}</p>
         <p class="table_row_phone">{{ item.phone }}</p>
         <p class="table_row_comment">{{ item.comment }}</p>
       </div>
@@ -181,8 +181,10 @@ export default {
           slots.push({
             id: el.id,
             time: el.datetime.split(/[- :]/)[3] + ":00",
+            datetime: el.datetime,
             service: el.service.name,
             name: el.name,
+            lastname: el.lastname,
             phone: el.phone,
             comment: el.comment ?? "Коментарий отстутсвует",
             status: el.status,
