@@ -6,16 +6,15 @@
     </div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
-    data() {
-        return {
-            isAuth: true,
-        };
+    computed: {
+        ...mapGetters(["getAuth"])
     },
     methods: {
-        setAuth(ev) {
-            this.isAuth = ev;
-            if (ev === true) {
+        setAuth(el) {
+            this.$store.commit('setAuth', true);
+            if (el === true) {
                 this.$router.push("/personalpage").catch(() => {});
             } else {
                 this.$router.push("/welcomepage").catch(() => {});
@@ -26,7 +25,7 @@ export default {
         if (this.$route.name === "NotFound") {
             this.$router.push("/404").catch(() => {});
         } else {
-            if (this.isAuth) {
+            if (this.getAuth) {
                 this.$router.push("/personalpage").catch(() => {});
             } else {
                 this.$router.push("/welcomepage").catch(() => {});
