@@ -10,7 +10,7 @@
           </div>
           <div class="form_serviceselect form_itemblock">
             <select class="form_input" id="service" v-model="service">
-              <option v-for="(option, index) of serviceArr" :key="index">
+              <option v-for="(option, index) of getServiceArr" :key="index">
                 {{ option.title }}
               </option>
             </select>
@@ -42,7 +42,7 @@
           </div>
           <div class="form_stime form_itemblock">
             <select class="form_input" id="stime" v-model="serviceTime">
-              <option v-for="(time, index) of timeLimits" :key="index">
+              <option v-for="(time, index) of getTimeLimits" :key="index">
                 {{ time }}
               </option>
             </select>
@@ -70,6 +70,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: "ClientDetails",
   props: {
@@ -94,34 +95,10 @@ export default {
       isFree: false,
       serviceTime: 60,
       serviceSelect: "",
-      serviceArr: [
-        {
-          title: "",
-          timeLimit: 60,
-        },
-        {
-          title: "Удаление тату. Малый размер",
-          timeLimit: 30,
-        },
-        {
-          title: "Удаление тату. Большой размер",
-          timeLimit: 60,
-        },
-        {
-          title: "Сеанс-тату. Малый размер",
-          timeLimit: 30,
-        },
-        {
-          title: "Сеанс-тату. Средний размер",
-          timeLimit: 30,
-        },
-        {
-          title: "Сеанс-тату. Большой размер",
-          timeLimit: 60,
-        },
-      ],
-      timeLimits: [15, 30, 45, 60],
     };
+  },
+  computed: {
+    ...mapGetters(['getServiceArr', 'getTimeLimits'])
   },
   methods: {
     closeModal() {
@@ -179,9 +156,9 @@ export default {
     this.isFree = this.actualItem.isFree;
     if (this.service != "") {
       ({ title: this.service, timeLimit: this.serviceTime } =
-        this.serviceArr.filter((item) => {
+        this.getServiceArr.find((item) => {
           return item.title == this.service;
-        })[0]);
+        }));
     }
   },
 };

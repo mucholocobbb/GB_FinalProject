@@ -1,36 +1,41 @@
 <template>
-     <div class="authorization">
-        <button class="sign_out">SIGN OUT</button>
-    </div>
+  <div class="authorization">
+    <button class="sign_out" @click="setAuth">SIGN OUT</button>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'AuthBtn',
-}
+  name: "AuthBtn",
+  methods: {
+    setAuth() {
+        this.$store.commit('setAuth', false);
+        this.$router.push("/welcomepage").catch(() => {});
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-    .authorization{
-        display: flex;
-        justify-content: center;
+.authorization {
+  display: flex;
+  justify-content: center;
 
-        .sign_out{
-            font-size: 14px;
-            line-height: 17px;
-            color: white;
-            background: #75AEF1;
-            border: 0;
-            border-radius: 10px;
-            box-sizing: border-box;
-            padding: 12px 16px;
-            
-            position: absolute;
-            bottom: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+  .sign_out {
+    font-size: 14px;
+    line-height: 17px;
+    color: white;
+    background: #75aef1;
+    border: 0;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding: 12px 16px;
 
-        }
-    }
+    position: absolute;
+    bottom: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>

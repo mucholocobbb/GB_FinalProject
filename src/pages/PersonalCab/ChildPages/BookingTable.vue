@@ -7,19 +7,33 @@
       @closeModal="closeModal"
       @setItem="setItem"
     />
-    <div
-      class="table_row"
-      :class="slotStatus(item.status)"
-      @click="setBook(item, index)"
-      v-for="(item, index) in slotList"
-      :key="index"
-    >
-      <p class="table_row_slottime">{{ item.time }}</p>
-      <div class="table_row_slotblock">
-        <p class="table_row_service">{{ item.service }}</p>
-        <p class="table_row_name">{{ item.name }}</p>
-        <p class="table_row_phone">{{ item.phone }}</p>
-        <p class="table_row_comment">{{ item.comment }}</p>
+    <div class="table_centreblock">
+      <div>
+        <div
+          class="table_basicRow"
+          v-for="(item, index) in getWorkTimeList"
+          :key="index"
+          :style="{ height: setRowHeight(item) }"
+        >
+          {{ item }}
+        </div>
+      </div>
+      <div style="width: 100%">
+        <div
+          class="table_row"
+          :class="slotStatus(getItem(item, 'status'))"
+          @click="setBook(getSlotList, index)"
+          v-for="(item, index) in getWorkTimeList"
+          :key="index"
+          :style="{ height: setRowHeight(item) }"
+        >
+          <div class="table_row_slotblock">
+            <p class="table_row_service">{{ getItem(item, "service") }}</p>
+            <p class="table_row_name">{{ getItem(item, "name") }}</p>
+            <p class="table_row_phone">{{ getItem(item, "phone") }}</p>
+            <p class="table_row_comment">{{ getItem(item, "comment") }}</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -27,6 +41,7 @@
 
 <script>
 import ClientDetails from "@/components/CLientDetails.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "BookingTable",
@@ -36,86 +51,22 @@ export default {
       isModalOpen: false,
       actualSlot: {},
       actualIndex: 0,
-      slotList: [
-        {
-          time: "10:00",
-          service: "Сеанс-тату. Средний размер",
-          name: "Антон Александров",
-          phone: "8-999-544-01-40",
-          comment: "Татуировка дракона - спина, взять обезбол",
-          status: "past",
-          isFree: false,
-        },
-        {
-          time: "11:00",
-          service: "",
-          name: "",
-          phone: "",
-          comment: "",
-          status: "freeslot",
-          isFree: true,
-        },
-        {
-          time: "12:00",
-          service: "Удаление тату. Малый размер",
-          name: "Елена Дмитриева",
-          phone: "8-999-544-01-40",
-          comment: "",
-          status: "pass",
-          isFree: false,
-        },
-        {
-          time: "13:00",
-          service: "Сеанс-тату. Большой размер",
-          name: "Илья Иванов",
-          phone: "8-999-544-01-40",
-          comment: "Парковка фольксваген т143ов77",
-          status: "masterbook",
-          isFree: false,
-        },
-        {
-          time: "14:00",
-          service: "",
-          name: "",
-          phone: "",
-          comment: "",
-          status: "freeslot",
-          isFree: true,
-        },
-        {
-          time: "15:00",
-          service: "",
-          name: "",
-          phone: "",
-          comment: "",
-          status: "freeslot",
-          isFree: true,
-        },
-        {
-          time: "16:00",
-          service: "",
-          name: "Дмитрий",
-          phone: "8-999-544-01-40",
-          comment: "Хочет партаки",
-          status: "clientbook",
-          isFree: false,
-        },
-        {
-          time: "17:00",
-          service: "",
-          name: "",
-          phone: "",
-          comment: "",
-          status: "freeslot",
-          isFree: true,
-        },
-      ],
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(["getSlotList", "getWorkTime", "getWorkTimeList"]),
+  },
   methods: {
+    getItem(item, name) {
+      let slot = this.getSlotList.find((el) => {
+        return el.time === item;
+      });
+      if (slot !== undefined) {
+        return slot[name];
+      } 
+    },
     setBook(item, index) {
-      this.actualSlot = item;
+      this.actualSlot = item[index];
       this.isModalOpen = true;
       this.actualIndex = index;
     },
@@ -140,10 +91,44 @@ export default {
       this.isModalOpen = false;
     },
     setItem(newItem) {
-      this.slotList[newItem.index] = newItem.item;
+      this.$store.commit("setSlotList", newItem);
       this.actualSlot = {};
       this.isModalOpen = false;
     },
+    setWorkTime() {
+      let setArray = [];
+      let firstStep = this.getWorkTime;
+      let fromH = firstStep.from.split(":")[0];
+      let fromM = firstStep.from.split(":")[1];
+      let toH = firstStep.to.split(":")[0];
+      let toM = firstStep.to.split(":")[1];
+      for (let i = fromH; i <= toH; i++) {
+        let item = "";
+        if (i === fromH) {
+          item = `${i}:${fromM}`;
+        } else {
+          item = `${i}:00`;
+        }
+        setArray.push(item);
+      }
+      if (setArray[setArray.length - 1] == `${toH}:00` && toM != "00") {
+        setArray.push(`${toH}:${toM}`);
+      }
+      this.$store.commit("setWorkTimeList", setArray);
+    },
+
+    // TODO вынести в стор метод .
+    setRowHeight(item) {
+      let minute = item.split(":")[1];
+      if (minute != "00") {
+        return `${minute}px`;
+      } else {
+        return "60px";
+      }
+    },
+  },
+  mounted() {
+    this.setWorkTime();
   },
 };
 </script>
@@ -151,12 +136,26 @@ export default {
 <style lang="scss" scoped>
 .table {
   position: relative;
-  &_row {
+  &_centreblock {
+    display: flex;
+  }
+  &_basicRow {
+    color: rgba(103, 103, 103, 0.8);
+    font-size: 10px;
+    width: 60px;
+    background-color: #fff;
+    box-shadow: inset 0 0 1px 0 rgba(152, 148, 148, 1);
+    padding: 8px;
+    text-align: center;
+  }
+  &_mainblock {
     width: 100%;
-    height: 60px;
+  }
+  &_row {
     background-color: #fff;
     display: flex;
-    margin: 2px 0;
+    box-shadow: inset 0 0 1px 0 rgba(152, 148, 148, 1);
+
     transition: all 0.2s;
     &:hover {
       border: 1px solid rgba(103, 103, 103, 0.6);

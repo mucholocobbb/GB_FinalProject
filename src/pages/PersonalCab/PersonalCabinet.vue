@@ -16,7 +16,7 @@
               {{ listDate }}
             </p>
             <p v-if="isBookingList" class="content_listinfo_time">
-              ( {{ listTime }} )
+              ( {{ getWorkTime.from }} - {{ getWorkTime.to }} )
             </p>
           </div>
           <a
@@ -36,6 +36,7 @@
 
 <script>
 import SideBar from "@/components/SideBar.vue";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PersonalCabinet",
@@ -51,6 +52,9 @@ export default {
       listTime: "10:00 - 18:00",
       isBookingList: true,
     };
+  },
+  computed: {
+    ...mapGetters(["getWorkTime"]),
   },
   methods: {
     getAction() {
